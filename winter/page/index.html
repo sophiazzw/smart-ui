@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>xxx</title>
+
+</head>
+<body>
+	<script>
+	require.async('common:curry',function(object){
+		var doslice = object.curry(function(){
+			console.log(arguments);
+			var slice = [].slice.call(arguments);
+		});
+	});
+
+	var curryWeight = function(fn) {
+	    var _fishWeight = [];
+	    return function() {
+	    	console.log({}.toString.call(arguments));
+	    	console.log([].slice);
+	    	console.log({}.toString(''.slice.call('')));	
+	        if (arguments.length === 0) {
+	            return fn.apply(null, _fishWeight);
+	        } else {
+	            _fishWeight = _fishWeight.concat([].slice.call(arguments));
+	        }
+	    }
+	};
+	var fishWeight = 0;
+	var addWeight = curryWeight(function() {
+	    var i=0; len = arguments.length;
+	    console.log(arguments);
+	    for (i; i<len; i+=1) {
+	        fishWeight += arguments[i];
+	    }
+	});
+	console.log(addWeight);
+	addWeight(2.3);
+	addWeight(6.5);
+	addWeight(1.2);
+	addWeight(2.5);
+	addWeight();    //  这里才计算
+
+	console.log(fishWeight);    // 12.5
+	</script>
+</body>
+</html>
